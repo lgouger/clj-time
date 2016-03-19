@@ -97,6 +97,7 @@
   (month [this]   "Return the month component of the given date/time.")
   (day [this]   "Return the day of month component of the given date/time.")
   (day-of-week [this]   "Return the day of week component of the given date/time. Monday is 1 and Sunday is 7")
+  (day-of-year [this]   "Return the day of year component of the given date/time.")
   (hour [this]   "Return the hour of day component of the given date/time. A time of 12:01am will have an hour component of 0.")
   (minute [this]   "Return the minute of hour component of the given date/time.")
   (sec [this]   "Return the second of minute component of the given date/time.")
@@ -117,6 +118,7 @@
   (month [this] (.getMonthOfYear this))
   (day [this] (.getDayOfMonth this))
   (day-of-week [this] (.getDayOfWeek this))
+  (day-of-year [this] (.getDayOfYear this))
   (hour [this] (.getHourOfDay this))
   (minute [this] (.getMinuteOfHour this))
   (sec [this]
@@ -139,6 +141,7 @@
   (month [this] (.getMonthOfYear this))
   (day [this] (.getDayOfMonth this))
   (day-of-week [this] (.getDayOfWeek this))
+  (day-of-year [this] (.getDayOfYear this))
   (hour [this] (.getHourOfDay this))
   (minute [this] (.getMinuteOfHour this))
   (sec [this]
@@ -161,6 +164,7 @@
   (month [this] (.getMonthOfYear this))
   (day [this] (.getDayOfMonth this))
   (day-of-week [this] (.getDayOfWeek this))
+  (day-of-year [this] (.getDayOfYear this))
   (hour [this] (.getHourOfDay this))
   (minute [this] (.getMinuteOfHour this))
   (sec [this]
@@ -191,6 +195,7 @@
   (month [this] (.getMonthOfYear this))
   (day [this] (.getDayOfMonth this))
   (day-of-week [this] (.getDayOfWeek this))
+  (day-of-year [this] (.getDayOfYear this))
   (after? [this ^ReadablePartial that] (.isAfter this that))
   (before? [this ^ReadablePartial that] (.isBefore this that))
   (plus- [this ^ReadablePeriod period] (.plus this period))
