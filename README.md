@@ -1,4 +1,4 @@
-# `clj-time` <a href="http://travis-ci.org/#!/seancorfield/clj-time/builds"><img src="https://secure.travis-ci.org/seancorfield/clj-time.png" /></a> [![Dependency Status](https://www.versioneye.com/clojure/clj-time:clj-time/0.11.0/badge.png)](https://www.versioneye.com/clojure/clj-time:clj-time/0.11.0)
+# `clj-time` <a href="http://travis-ci.org/#!/seancorfield/clj-time/builds"><img src="https://secure.travis-ci.org/seancorfield/clj-time.png" /></a> [![Dependency Status](https://www.versioneye.com/clojure/clj-time:clj-time/0.11.0/badge.png)](https://www.versioneye.com/clojure/clj-time:clj-time/0.11.0) [![Join the chat at https://gitter.im/clj-time/clj-time](https://badges.gitter.im/clj-time/clj-time.svg)](https://gitter.im/clj-time/clj-time?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 
 A date and time library for Clojure, wrapping the [Joda Time](http://www.joda.org/joda-time/) library.
@@ -21,7 +21,7 @@ If you are using Maven, add the following repository definition to your `pom.xml
 With Leiningen:
 
 ``` clj
-[clj-time "0.11.0"]
+[clj-time "0.12.0"]
 ```
 
 With Maven:
@@ -30,7 +30,7 @@ With Maven:
 <dependency>
   <groupId>clj-time</groupId>
   <artifactId>clj-time</artifactId>
-  <version>0.11.0</version>
+  <version>0.12.0</version>
 </dependency>
 ```
 
