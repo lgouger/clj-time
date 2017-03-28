@@ -277,11 +277,11 @@
 (defn ^DateTime with-time-at-start-of-day
   "Returns a DateTime representing the start of the day. Normally midnight,
   but not always true, as in some time zones with daylight savings."
-  [dt]
+  [^DateTime dt]
   (.withTimeAtStartOfDay dt))
 
 (defn epoch
-  "Returns a DateTime for the begining of the Unix epoch in the UTC time zone."
+  "Returns a DateTime for the beginning of the Unix epoch in the UTC time zone."
   []
   (DateTime. (long 0) ^DateTimeZone utc))
 
@@ -486,7 +486,7 @@
      (Seconds/seconds n)))
 
 (extend-protocol InTimeUnitProtocol
-  org.joda.time.Interval 
+  org.joda.time.Interval
   (in-millis [this] (.toDurationMillis this))
   (in-seconds [this] (.getSeconds (.toPeriod this (seconds))))
   (in-minutes [this] (.getMinutes (.toPeriod this (minutes))))
@@ -502,7 +502,7 @@
   (in-hours [this] (-> this .toPeriod .toStandardHours .getHours))
   (in-days [this] (-> this .toPeriod .toStandardDays .getDays))
   (in-weeks [this] (-> this .toPeriod .toStandardWeeks .getWeeks))
-  (in-months [this] 
+  (in-months [this]
     (condp instance? this
       org.joda.time.Months (.getMonths ^org.joda.time.Months this)
       org.joda.time.Years (* 12 (.getYears ^org.joda.time.Years this))
@@ -523,14 +523,14 @@
   [^Interval in]
   (deprecated "in-msecs has been deprecated in favor of in-millis")
   (in-millis in))
- 
+
 (defn in-secs
   "DEPRECATED: Returns the number of standard seconds in the given Interval."
   {:deprecated "0.6.0"}
   [^Interval in]
   (deprecated "in-secs has been deprecated in favor of in-seconds")
   (in-seconds in))
- 
+
 (defn secs
   "DEPRECATED"
   {:deprecated "0.6.0"}
@@ -772,8 +772,12 @@
   e.g. (floor (now) hour) returns (now) for all units
   up to and including the hour"
   ([^DateTime dt dt-fn]
-	 (let [dt-fns [year month day hour minute second milli]]
-	 	(apply date-time
-	 		(map apply
-				(concat (take-while (partial not= dt-fn) dt-fns) [dt-fn])
-				(repeat [dt]))))))
+   (let [dt-fns [year month day hour minute second milli]
+         tz (.getZone dt)]
+    (.withZoneRetainFields
+                ^DateTime
+  	 	(apply date-time
+  	 		(map apply
+  				(concat (take-while (partial not= dt-fn) dt-fns) [dt-fn])
+  				(repeat [dt])))
+      tz))))

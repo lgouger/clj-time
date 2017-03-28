@@ -1,4 +1,4 @@
-# `clj-time` <a href="http://travis-ci.org/#!/seancorfield/clj-time/builds"><img src="https://secure.travis-ci.org/seancorfield/clj-time.png" /></a> [![Dependency Status](https://www.versioneye.com/clojure/clj-time:clj-time/0.11.0/badge.png)](https://www.versioneye.com/clojure/clj-time:clj-time/0.11.0) [![Join the chat at https://gitter.im/clj-time/clj-time](https://badges.gitter.im/clj-time/clj-time.svg)](https://gitter.im/clj-time/clj-time?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+# `clj-time` <a href="http://travis-ci.org/#!/clj-time/clj-time/builds"><img src="https://secure.travis-ci.org/clj-time/clj-time.png" /></a> [![Dependency Status](https://www.versioneye.com/clojure/clj-time:clj-time/badge.png)](https://www.versioneye.com/clojure/clj-time:clj-time) [![Join the chat at https://gitter.im/clj-time/clj-time](https://badges.gitter.im/clj-time/clj-time.svg)](https://gitter.im/clj-time/clj-time?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 
 A date and time library for Clojure, wrapping the [Joda Time](http://www.joda.org/joda-time/) library.
@@ -21,7 +21,7 @@ If you are using Maven, add the following repository definition to your `pom.xml
 With Leiningen:
 
 ``` clj
-[clj-time "0.12.0"]
+[clj-time "0.13.0"]
 ```
 
 With Maven:
@@ -30,7 +30,7 @@ With Maven:
 <dependency>
   <groupId>clj-time</groupId>
   <artifactId>clj-time</artifactId>
-  <version>0.12.0</version>
+  <version>0.13.0</version>
 </dependency>
 ```
 
@@ -166,13 +166,17 @@ overlap between two intervals:
 ```
 
 `today-at` returns a moment in time at the given hour,
-minute and second on the current date:
+minute and second on the current date UTC; not the current system date:
 
 ``` clj
 (t/today-at 12 00)
 => #<DateTime 2013-03-29T12:00:00.000Z>
 (t/today-at 12 00 05)
 => #<DateTime 2013-03-29T12:00:05.000Z>
+
+;; System clock says 11PM on 12/20/2016 UTC-5
+(t/today-at 7 00 00)
+=> #<DateTime 2016-12-21T7:00:00.000Z>
 ```
 
 ### clj-time.format
@@ -321,6 +325,8 @@ separated by a time period starting with the given point in time:
 (take 10 (p/periodic-seq (t/now) (t/hours 12)))
 ```
 
+In particular, if you ask for a sequence of instants separated by a month, you will get dates where the month increases each time (rather than being, say, 30 days apart).
+
 ### clj-time.predicates
 
 `clj-time.predicates` comes with a set of handy predicates to
@@ -390,4 +396,3 @@ The complete [API documentation](http://clj-time.github.com/clj-time/doc/index.h
 ## License
 
 Released under the MIT License: <https://github.com/clj-time/clj-time/blob/master/MIT-LICENSE.txt>
-
