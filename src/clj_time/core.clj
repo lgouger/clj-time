@@ -120,7 +120,8 @@
     "Returns a new date/time corresponding to the given date/time moved backwards by the given Period(s).")
   (first-day-of-the-month- [this] "Returns the first day of the month")
   (last-day-of-the-month- [this] "Returns the last day of the month")
-  (week-number-of-year [this] "Returs the number of weeks in the year"))
+  (week-number-of-year [this] "Returns the week of the week based year of the given date/time")
+  (week-year [this] "Returns the the week based year of the given date/time."))
 
 (defprotocol InTimeUnitProtocol
   "Interface for in-<time unit> functions"
@@ -159,6 +160,7 @@
      (.. ^DateTime this dayOfMonth withMaximumValue))
   (week-number-of-year [this]
     (.getWeekOfWeekyear this))
+  (week-year [this] (.getWeekyear this))
 
   org.joda.time.DateMidnight
   (year [this] (.getYear this))
@@ -185,6 +187,7 @@
      (.. ^DateMidnight this dayOfMonth withMaximumValue))
   (week-number-of-year [this]
     (.getWeekOfWeekyear this))
+  (week-year [this] (.getWeekyear this))
 
   org.joda.time.LocalDateTime
   (year [this] (.getYear this))
@@ -211,6 +214,7 @@
      (.. ^LocalDateTime this dayOfMonth withMaximumValue))
   (week-number-of-year [this]
     (.getWeekOfWeekyear this))
+  (week-year [this] (.getWeekyear this))
 
   org.joda.time.YearMonth
   (year [this] (.getYear this))
@@ -238,6 +242,7 @@
      (.. ^LocalDate this dayOfMonth withMaximumValue))
   (week-number-of-year [this]
     (.getWeekOfWeekyear this))
+  (week-year [this] (.getWeekyear this))
 
   org.joda.time.LocalTime
   (hour [this] (.getHourOfDay this))
@@ -274,7 +279,7 @@
   ([^DateTimeZone tz]
    (DateMidnight. tz)))
 
-(defn ^DateTime with-time-at-start-of-day
+(defn ^org.joda.time.DateTime with-time-at-start-of-day
   "Returns a DateTime representing the start of the day. Normally midnight,
   but not always true, as in some time zones with daylight savings."
   [^DateTime dt]
@@ -307,7 +312,7 @@
   [dt & dts]
   (reduce #(if (after? %1 %2) %1 %2) dt dts))
 
-(defn ^DateTime date-time
+(defn ^org.joda.time.DateTime date-time
   "Constructs and returns a new DateTime in UTC.
    Specify the year, month of year, day of month, hour of day, minute of hour,
    second of minute, and millisecond of second. Note that month and day are
@@ -741,7 +746,7 @@
    (plus (first-day-of-the-month dt)
          (days (- n 1)))))
 
-(defn ^DateTime today-at
+(defn ^org.joda.time.DateTime today-at
   ([^long hours ^long minutes ^long seconds ^long millis]
      (let [^MutableDateTime mdt (.toMutableDateTime ^DateTime (now))]
        (.toDateTime (doto mdt
@@ -767,7 +772,7 @@
   `(do-at* ~base-date-time
     (fn [] ~@body)))
 
-(defn ^DateTime floor
+(defn ^org.joda.time.DateTime floor
   "Floors the given date-time dt to the given time unit dt-fn,
   e.g. (floor (now) hour) returns (now) for all units
   up to and including the hour"

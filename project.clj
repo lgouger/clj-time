@@ -1,4 +1,4 @@
-(defproject clj-time/clj-time "0.13.0"
+(defproject clj-time/clj-time "0.14.2"
   :description "A date and time library for Clojure, wrapping Joda Time."
   :url "https://github.com/clj-time/clj-time"
   :mailing-list {:name "clj-time mailing list"
@@ -21,7 +21,7 @@
              :1.7    {:dependencies [[org.clojure/clojure "1.7.0"]]}
              :master {:repositories [["snapshots" "https://oss.sonatype.org/content/repositories/snapshots/"]]
                       :dependencies [[org.clojure/clojure "1.9.0-master-SNAPSHOT"]]}
-             :spec   {:dependencies [[org.clojure/clojure "1.9.0-alpha14"]
+             :spec   {:dependencies [[org.clojure/clojure "1.9.0-alpha17"]
                                      [org.clojure/test.check "0.9.0"]]
                       :test-paths ["test" "test_clj_1.9"]}}
 
