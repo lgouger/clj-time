@@ -1,7 +1,11 @@
 # `clj-time` <a href="http://travis-ci.org/#!/clj-time/clj-time/builds"><img src="https://secure.travis-ci.org/clj-time/clj-time.png" /></a> [![Dependency Status](https://www.versioneye.com/clojure/clj-time:clj-time/badge.png)](https://www.versioneye.com/clojure/clj-time:clj-time) [![Join the chat at https://gitter.im/clj-time/clj-time](https://badges.gitter.im/clj-time/clj-time.svg)](https://gitter.im/clj-time/clj-time?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 
-A date and time library for Clojure, wrapping the [Joda Time](http://www.joda.org/joda-time/) library.
+A date and time library for Clojure, wrapping the [Joda Time](http://www.joda.org/joda-time/) library. **The Joda Time website says:**
+
+> Note that from Java SE 8 onwards, users are asked to migrate to java.time (JSR-310) - a core part of the JDK which replaces this project.
+
+If you are using Java 8 or later, consider using the built-in Java Time instead of Joda Time -- and look at [clojure.java-time](https://github.com/dm3/clojure.java-time) if you want a Clojure wrapper for that.
 
 ## Artifacts
 
@@ -21,7 +25,7 @@ If you are using Maven, add the following repository definition to your `pom.xml
 With Leiningen:
 
 ```
-[clj-time "0.14.2"]
+[clj-time "0.14.3"]
 ```
 
 With Maven:
@@ -30,13 +34,13 @@ With Maven:
 <dependency>
   <groupId>clj-time</groupId>
   <artifactId>clj-time</artifactId>
-  <version>0.14.2</version>
+  <version>0.14.3</version>
 </dependency>
 ```
 
 ## Bugs and Enhancements
 
-Please open issues against the [official clj-time repo on Github](https://github.com/clj-time/clj-time/issues).
+Please open issues against the [official clj-time repo on Github](https://github.com/clj-time/clj-time/issues). `clj-time` is a very thin wrapper around Joda Time. That means that if Joda Time has a "peculiar behavior", it's likely to be surfaced directly in `clj-time` as well. A good example of this is `clj-time.format/unparse` which simply calls Joda Time's `.print` method -- and if the date passed in happens to be `nil`, you silently get back the _current date/time_ (many people would expect an exception!).
 
 ## Mailing List
 
@@ -231,6 +235,8 @@ format, you can do this:
 (f/unparse multi-parser (f/parse multi-parser "2012/02/01"))
 => "2012-02-01"
 ```
+
+Note: Joda Time's `.print` method accepts a null date/time object and substitutes the current date/time, so `(f/unparse my-fmt nil)` will not throw an exception -- it will just silently return the current date/time!
 
 ### clj-time.coerce
 
