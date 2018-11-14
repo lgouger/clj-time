@@ -1,3 +1,22 @@
+## Changes Between 0.15.0 and 0.15.1
+
+* Add `adjust` for intervals, so they can be "moved" backwards and forwards by one or more periods (#257).
+
+## Changes Between 0.14.5 and 0.15.0
+
+* Add tagged literal support (in `clj-time.coerce`) (#255, @jconti). `DateTime` can be converted `to-edn` and can be printed as `#clj-time/date-time "..."`, and `data_readers.clj` provides the conversion from that back to `DateTime`.
+
+## Changes Between 0.14.4 and 0.14.5
+
+* Update Joda Time to 2.10 (#254, @novalis).
+* Update various dev/test dependencies; clean up `spec_test.clj` to avoid Clojure refer warnings.
+* Drop `oraclejdk7` from test matrix (we still support `openjdk7`); add `openjdk8`; test Clojure 1.10 on Java 8+ only (#253).
+* Switch to versions.deps.co for tracking outdated dependencies (#252, @v-kolesnikov).
+
+## Changes Between 0.14.3 and 0.14.4
+
+* On Clojure 1.9 and later, `ReadableInstant` now extends to `Inst`, providing `inst?` and `inst-ms` on most Joda Time types (#248, #249)
+
 ## Changes Between 0.14.2 and 0.14.3
 
 * Added deprecation notice and recommendation to move to Java Time (and [clojure.java-time](https://github.com/dm3/clojure.java-time)).

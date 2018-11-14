@@ -1,11 +1,15 @@
-# `clj-time` <a href="http://travis-ci.org/#!/clj-time/clj-time/builds"><img src="https://secure.travis-ci.org/clj-time/clj-time.png" /></a> [![Dependency Status](https://www.versioneye.com/clojure/clj-time:clj-time/badge.png)](https://www.versioneye.com/clojure/clj-time:clj-time) [![Join the chat at https://gitter.im/clj-time/clj-time](https://badges.gitter.im/clj-time/clj-time.svg)](https://gitter.im/clj-time/clj-time?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Build Status](https://travis-ci.org/clj-time/clj-time.svg?branch=master)](https://travis-ci.org/clj-time/clj-time)
+[![Dependencies Status](https://versions.deps.co/clj-time/clj-time/status.svg)](https://versions.deps.co/clj-time/clj-time)
+[![Downloads](https://versions.deps.co/clj-time/clj-time/downloads.svg)](https://versions.deps.co/clj-time/clj-time)
+[![Join the chat at https://gitter.im/clj-time/clj-time](https://badges.gitter.im/clj-time/clj-time.svg)](https://gitter.im/clj-time/clj-time?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+# clj-time
 
 A date and time library for Clojure, wrapping the [Joda Time](http://www.joda.org/joda-time/) library. **The Joda Time website says:**
 
 > Note that from Java SE 8 onwards, users are asked to migrate to java.time (JSR-310) - a core part of the JDK which replaces this project.
 
-If you are using Java 8 or later, consider using the built-in Java Time instead of Joda Time -- and look at [clojure.java-time](https://github.com/dm3/clojure.java-time) if you want a Clojure wrapper for that.
+If you are using Java 8 or later, consider using the built-in Java Time instead of Joda Time -- and look at [clojure.java-time](https://github.com/dm3/clojure.java-time) if you want a Clojure wrapper for that. See [Converting from Joda Time to java.time](http://blog.joda.org/2014/11/converting-from-joda-time-to-javatime.html) for more details about the similarities and differences between the two libraries.
 
 ## Artifacts
 
@@ -25,7 +29,7 @@ If you are using Maven, add the following repository definition to your `pom.xml
 With Leiningen:
 
 ```
-[clj-time "0.14.3"]
+[clj-time "0.15.0"]
 ```
 
 With Maven:
@@ -34,7 +38,7 @@ With Maven:
 <dependency>
   <groupId>clj-time</groupId>
   <artifactId>clj-time</artifactId>
-  <version>0.14.3</version>
+  <version>0.15.0</version>
 </dependency>
 ```
 
@@ -244,7 +248,7 @@ The namespace `clj-time.coerce` contains utility functions for
 coercing Joda `DateTime` instances to and from various other types:
 
 
-``` clj
+```clojure
 (require '[clj-time.coerce :as c])
 ```
 
@@ -271,6 +275,38 @@ There are also conversions to and from `java.util.Date` (`to-date` and
 `from-date`), `java.sql.Date` (`to-sql-date` and `from-sql-date`),
 `java.sql.Timestamp` (`to-sql-time` and `from-sql-time`) and several
 other types.
+
+To support serialization to the ubiquitous
+[EDN format](https://github.com/edn-format/edn),
+`pr`, `prn` etc. will serialize Joda `DateTime` in a tagged-literal format,
+that `clojure.edn/read` will deserialize.  There is a `data_readers.clj`
+file, or if not loaded a `data-readers` var to use with `clojure.edn`.
+
+```clojure
+(pr-str (t/date-time 1998 4 25))
+=> "#clj-time/date-time \"1998-04-25T00:00:00.000Z\""
+```
+
+```clojure
+(require '[clojure.edn :as edn])
+=> nil
+```
+
+```clojure
+(def x (edn/read-string {:readers c/data-readers}
+                        (pr-str (t/date-time 1998 4 25))))
+```
+
+```clojure
+(type x)
+=> org.joda.time.DateTime
+```
+
+```clj
+x
+=> #clj-time/date-time "1998-04-25T00:00:00.000Z"
+```
+
 
 ### clj-time.local
 
@@ -342,7 +378,7 @@ check for common conditions. For instance:
 (require '[clj-time.core :as t])
 (require '[clj-time.predicates :as pr])
 ```
-``` clojure
+```clojure
 (pr/monday? (t/date-time 1999 9 9))
 => false
 
@@ -391,7 +427,7 @@ objects when "reading" where you would have previously expected
 
 Running the tests:
 
-    $ rm -f test/readme.clj && lein test-all && lein test-readme
+    $ rm -f test/readme.clj && lein test-all
 
 (assumes Leiningen 2.x)
 
